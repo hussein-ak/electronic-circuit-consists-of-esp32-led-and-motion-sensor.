@@ -12,3 +12,42 @@ I developed an electronic system utilizing an ESP32 microcontroller, integrated 
 4. Real-time Response: The system continuously monitors for motion, ensuring immediate response to environmental changes.
 
 This setup creates an intelligent, energy-efficient lighting solution that responds dynamically to human presence, ideal for applications such as smart home lighting or security systems.
+
+## The C++ code
+#include <Arduino.h>
+
+const int motionSensorPin = 14; // GPIO pin for the motion sensor
+const int ledPin = 19;          // GPIO pin for the LED
+
+void setup() {
+  // Initialize serial communication
+  Serial.begin(115200);
+
+  // Initialize the motion sensor pin as an input
+  pinMode(motionSensorPin, INPUT);
+
+  // Initialize the LED pin as an output
+  pinMode(ledPin, OUTPUT);
+
+  // Ensure the LED is off initially
+  digitalWrite(ledPin, LOW);
+}
+
+void loop() {
+  // Read the value from the motion sensor
+  int motionState = digitalRead(motionSensorPin);
+
+  // If motion is detected, turn on the LED
+  if (motionState == HIGH) {
+    Serial.println("Motion detected!");
+    digitalWrite(ledPin, HIGH);
+  } 
+  // If no motion is detected, turn off the LED
+  else {
+    Serial.println("No motion detected.");
+    digitalWrite(ledPin, LOW);
+  }
+
+  // Add a small delay to avoid bouncing effects
+  delay(1000);
+}
